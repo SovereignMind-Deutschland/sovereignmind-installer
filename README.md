@@ -9,7 +9,10 @@ oder andere Cloud-KI-APIs.
 
 Dieses Repo enthält nur das, was für die Installation gebraucht wird. Der Quellcode ist nicht Teil davon.
 
-Präsentation: die aktuelle Fassung mit 17 Folien liegt auf der Github Page unter `praesentation/`. Themen: Problem, Lösung, Architektur, Funktionen, Assistenten, Schnittstellen, Stimmen, Tech-Stack und Geschäftsmodell).
+**Stand:** SovereignMind wird derzeit ausschließlich als Demo zur Erprobung bereitgestellt. Die Nutzung im Produktivbetrieb ist nicht gestattet.
+Ob und wann offizielle Lizenzen angeboten werden, ist offen; ein Anspruch auf den Abschluss einer Lizenz besteht nicht.
+
+Präsentation: die aktuelle Fassung mit 18 Folien liegt auf der Github Page unter `praesentation/`. Themen: Problem, Lösung, Architektur, Funktionen, Assistenten, Schnittstellen, Stimmen, Tech-Stack und Geschäftsmodell).
 
 ## Wofür ist das gedacht?
 
@@ -38,8 +41,9 @@ ist die selbst gehostete Alternative.
   Berechtigungen und Wissensstand fließen in den Cache ein; der Admin kann ihn leeren oder zurücksetzen.
 - **Dateien im Chat:** Dokumente direkt in einer Unterhaltung hochladen, ohne sie dauerhaft
   abzulegen.
-- **Sprache:** Diktat und Vorlesen mit mehreren Stimmen (Ramona, Karlsson, Thorsten), lokal
-  verarbeitet (Vorlesen mit Qwen3-TTS auf der GPU, sonst langsamer auf der CPU); der Admin schaltet beides pro Unternehmen frei.
+- **Sprache:** Vorlesen mit mehreren Stimmen (Ramona, Karlsson, Thorsten), lokal
+  verarbeitet (Qwen3-TTS, standardmäßig auf der CPU; die GPU wählt der Admin im Voice-Tab, die Unterstützung wird dann nachgeladen);
+  der Admin schaltet es pro Unternehmen frei. Das Diktat ist noch nicht verfügbar.
 - **Wissenspakete:** Vorverarbeitete Gesetze und Regelwerke als Pakete, die der Admin
   aus dem Katalog installiert oder als Datei importiert.
 - **Themes:** Jeder Nutzer wählt Stil, Hell/Dunkel und Akzentfarbe; das Unternehmen kann eine
@@ -56,7 +60,7 @@ Web-Oberfläche ──> Backend (Auth, Rollen, Lizenz, Mandanten)
                       ├─ Inferenz (Ollama)
                       ├─ Vektordatenbank (Qdrant)
                       ├─ Dokumentenverarbeitung (Docling)
-                      ├─ Sprache (Diktat/Vorlesen)
+                      ├─ Sprache (Vorlesen)
                       └─ PostgreSQL
 ```
 
@@ -73,16 +77,16 @@ sonst eine Vorarbeit nötig; Ollama und die Modelle liefert der Installer mit.
 
 ## Installation
 
-Windows: `SovereignMind-Setup-<Version>.exe` aus den Releases herunterladen und ausführen.
+Windows: `SovereignMind-Setup-Full-<Version>.exe` (samt `-N.bin`-Teilen; Varianten: `-Minimal`, `-Full-Api`, `-Minimal-Api`) aus den Releases herunterladen und ausführen.
 
 Linux: eine Datei, ein Befehl. Das Bundle entpackt sich selbst, installiert die Pakete nacheinander und löscht alles
 Entpackte am Ende wieder. Eine Release-Datei darf bei GitHub höchstens 2 GiB groß sein, deshalb liegt das Bundle in Teilen
-(`sovereignmind-installer_<Version>_amd64.run.part01` bis `partNN`). Alle Teile und `SHA256SUMS.txt` in einen Ordner laden:
+(`sovereignmind-installer-full_<Version>_amd64.run.part01` bis `partNN`; Varianten: `-minimal`, `-full-api`, `-minimal-api`). Alle Teile und `SHA256SUMS.txt` in einen Ordner laden:
 
 ```bash
-cat sovereignmind-installer_<Version>_amd64.run.part* > sovereignmind-installer_<Version>_amd64.run
+cat sovereignmind-installer-full_<Version>_amd64.run.part* > sovereignmind-installer-full_<Version>_amd64.run
 sha256sum -c --ignore-missing SHA256SUMS.txt        # jede Zeile muss "OK" sein
-sudo bash sovereignmind-installer_<Version>_amd64.run
+sudo bash sovereignmind-installer-full_<Version>_amd64.run
 ```
 
 Platz: ca. 13 GB Download, 7,7 GB (beim Update 13 GB) vorübergehend unter `/var/tmp`, ca. 26 GB installiert. Bei USB-Stick oder
