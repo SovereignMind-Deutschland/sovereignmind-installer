@@ -117,7 +117,7 @@ Die Release-Dateien sind die der Vollversion (siehe oben). Der Endnutzer-Lizenzv
 ### HTTPS
 
 Der Installer bringt Caddy als HTTPS-Proxy mit (Windows: Setup-Seite „HTTPS“, Dienst `SovereignMindProxy`; Linux: Dienst `sovereignmind-proxy`, Einrichtung mit
-`sudo sovereignmind https chat.example.de <modus>`). Chat (`chat.`) und Admin-Bereich (`admin.`) sind zwei Namen derselben App; die Demo startet auch dort.
+`sudo sovereignmind https chat.example.de <modus>`). Chat (`chat.`) und Admin-Bereich (`admin.`) sind zwei getrennte Apps mit eigenem Namen hinter demselben Backend; die Demo startet auch dort.
 Für andere Geräte muss der LAN-Zugriff an sein (`sovereignmind lan on`).
 
 | Modus | Zertifikat | Hinweis |
