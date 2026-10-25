@@ -93,7 +93,7 @@ Platz: ca. 13 GB Download, 7,7 GB (beim Update 13 GB) vorübergehend unter `/var
 eigenem Download-Server entfällt das Zusammenfügen. Optionen (`--accept-eula`, `--yes`, `--port`, `--no-lan`, `--full-backup` ...):
 `bash <datei>.run --help`. Ein vorhandenes, älteres Ollama wird auf die mitgelieferte Version angehoben.
 
-Danach ist die Oberfläche unter <http://localhost:5043> erreichbar. Beim ersten Aufruf führt die App
+Danach ist die Oberfläche unter <http://localhost:5043> (mit eingerichtetem HTTPS-Namen auch unter `https://chat.example.de`) erreichbar. Beim ersten Aufruf führt die App
 durch die Einrichtung (Lizenzschlüssel, Unternehmen, Admin-Passwort). Die Aktivierung läuft offline.
 
 Vor der Installation ist der Endnutzer-Lizenzvertrag (EULA) zu bestätigen: Das Windows-Setup zeigt ihn als Lizenzseite,
@@ -107,12 +107,25 @@ Prüfsummen stehen in `SHA256SUMS.txt` neben den Downloads.
 Zum Ausprobieren gibt es keinen eigenen Installer: Installiert wird dieselbe Software wie bei der Vollversion; beim ersten Aufruf der Weboberfläche zeigt sie eine
 Willkommensseite mit „Einrichten mit Lizenz“ und „Demo starten“. Die Demo läuft ohne Lizenzschlüssel höchstens 24 Stunden
 (es zählt die Betriebszeit der Dienste, spätestens 24 Stunden nach dem ersten Start), löscht danach alle Daten (die App steht dann wieder auf der Willkommensseite und
-lässt sich neu starten) und ist nur auf dem eigenen Rechner unter `http://localhost:5043` erreichbar, nicht im Netzwerk, auch wenn der LAN-Zugriff des Installers an ist.
+lässt sich neu starten) und ist nur auf dem eigenen Rechner (`http://localhost:5043`) oder unter dem eingerichteten HTTPS-Namen (siehe „HTTPS“) erreichbar; unter jedem anderen Namen lehnt die Software sie ab.
 Zugangsdaten: Admin mit Passwort `sovereignmind`, Nutzer `test@sovereignmind.de` mit Passwort `sovereignmind`. Eingeschränkt sind u. a. Nutzerverwaltung (ein Sitzplatz),
 Lizenz, Schnittstellen, Dokumentenzahl und -größe (50 / 200 MB); Sicherungen und Recovery-Kit gibt es in der Demo nicht. Mit einem gültigen Lizenzschlüssel schaltet ein Admin
 die laufende Demo zur Vollversion frei (Daten übernehmen oder neu beginnen).
 
 Die Release-Dateien sind die der Vollversion (siehe oben). Der Endnutzer-Lizenzvertrag (Entwurf) wird in der App vor dem Start der Demo bestätigt.
+
+### HTTPS
+
+Der Installer bringt Caddy als HTTPS-Proxy mit (Windows: Setup-Seite „HTTPS“, Dienst `SovereignMindProxy`; Linux: Dienst `sovereignmind-proxy`, Einrichtung mit
+`sudo sovereignmind https chat.example.de <modus>`). Chat (`chat.`) und Admin-Bereich (`admin.`) sind zwei Namen derselben App; die Demo startet auch dort.
+Für andere Geräte muss der LAN-Zugriff an sein (`sovereignmind lan on`).
+
+| Modus | Zertifikat | Hinweis |
+| --- | --- | --- |
+| `internal` (Standard) | interne CA | Root-Zertifikat einmalig je Gerät installieren, sonst Browserwarnung |
+| `acme-http` | Let's Encrypt (HTTP-01) | öffentlicher Name, Port 80 aus dem Internet |
+| `acme-dns` | Let's Encrypt (DNS-01) | eigene Domain, API-Schlüssel des DNS-Anbieters |
+| `wildcard` | mitgeliefertes Wildcard-Zertifikat | keine Browserwarnung; wird erst mit gültiger Lizenz aktiv, bis dahin `internal`; Namen per Hosts-Zeile oder Router-DNS |
 
 ## Lizenzen
 
@@ -136,6 +149,7 @@ Linux: Das Kommando `sovereignmind` (kein root nötig für `open`, `url`, `statu
 | `sovereignmind autostart on\|off` | Start beim Hochfahren ein/aus |
 | `sovereignmind logs [dienst] [--once]` | Protokoll (backend, postgres, qdrant, ingestion, voice, ollama) |
 | `sovereignmind lan on\|off [IP]` | Zugriff aus dem Netzwerk ein/aus |
+| `sovereignmind https NAME [MODUS]` | HTTPS-Name und Zertifikatsmodus einrichten, `https off` schaltet ab |
 | `sovereignmind backup` | Sicherung jetzt starten |
 
 Beispielausgabe von `sovereignmind status`:
