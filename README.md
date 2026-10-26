@@ -77,11 +77,11 @@ sonst eine Vorarbeit nötig; Ollama und die Modelle liefert der Installer mit.
 
 ## Installation
 
-Windows: `SovereignMind-Setup-Full-<Version>.exe` (samt `-N.bin`-Teilen; Varianten: `-Minimal`, `-Full-Api`, `-Minimal-Api`) aus den Releases herunterladen und ausführen.
+Windows: `SovereignMind-Setup-Full-<Version>.exe` (samt `-N.bin`-Teilen; zweite Variante: `-Minimal`) aus den Releases herunterladen und ausführen.
 
 Linux: eine Datei, ein Befehl. Das Bundle entpackt sich selbst, installiert die Pakete nacheinander und löscht alles
 Entpackte am Ende wieder. Eine Release-Datei darf bei GitHub höchstens 2 GiB groß sein, deshalb liegt das Bundle in Teilen
-(`sovereignmind-installer-full_<Version>_amd64.run.part01` bis `partNN`; Varianten: `-minimal`, `-full-api`, `-minimal-api`). Alle Teile und `SHA256SUMS.txt` in einen Ordner laden:
+(`sovereignmind-installer-full_<Version>_amd64.run.part01` bis `partNN`; zweite Variante: `-minimal`). Alle Teile und `SHA256SUMS.txt` in einen Ordner laden:
 
 ```bash
 cat sovereignmind-installer-full_<Version>_amd64.run.part* > sovereignmind-installer-full_<Version>_amd64.run
