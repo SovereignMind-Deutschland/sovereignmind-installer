@@ -71,25 +71,41 @@ sonst eine Vorarbeit nötig; llama-server (llama.cpp) und die Modelle liefert de
 
 - Windows 10 (1809) / 11 / Server 2019+ (x64) oder Ubuntu 24.04 / Debian 12 (x64)
 - Administratorrechte (Windows) bzw. `sudo` (Linux)
-- Linux: ca. 13 GB Download und ca. 26 GB Platz nach der Installation
+- Linux: volles Bundle ca. 13 GB Download und ca. 26 GB Platz nach der Installation, minimales Bundle ca. 3 GB Download (dazu ca. 11 GB Modelle)
 - Für gute Antwortzeiten eine GPU mit ausreichend VRAM; ohne GPU läuft alles auf der CPU, deutlich langsamer
 - Ein Lizenzschlüssel (Token) und die E-Mail-Adresse, auf die er ausgestellt wurde (vom Anbieter)
 
 ## Installation
 
-Windows: `SovereignMind-Setup-Full-<Version>.exe` (samt `-N.bin`-Teilen; zweite Variante: `-Minimal`) aus den Releases herunterladen und ausführen.
+**Ein Befehl (minimale Variante, die Modelle werden beim Installieren geladen).** Das Skript ermittelt die neueste Version im Release, lädt die Dateien, prüft sie gegen `SHA256SUMS.txt` und startet den Installer. Den Endnutzer-Lizenzvertrag bestätigen Sie im Installer; das Skript stimmt nie für Sie zu. Es lässt sich vorab lesen (Befehl ohne `| iex` bzw. `| sh`).
+
+```powershell
+# Windows (PowerShell)
+irm https://sovereignmind-deutschland.github.io/sovereignmind-website/install.ps1 | iex
+```
+
+```bash
+# Linux (Ubuntu 24.04 / Debian 12)
+curl -fsSL https://sovereignmind-deutschland.github.io/sovereignmind-website/install.sh | sh
+```
+
+Optionen für den Installer: Windows `$env:SM_SETUP_ARGS = "/FRONTEND=off"` vor dem Befehl, Linux `SM_BUNDLE_ARGS="--no-frontend"` vor `sh`. `SM_VERSION` wählt eine bestimmte Version. Das Linux-Skript braucht in `/var/tmp` ca. 6 GB frei (`SM_DOWNLOAD_DIR` ändert den Ordner); `| sh -s -- --dry-run` prüft nur.
+
+**Von Hand aus den Release-Dateien.** Windows: `SovereignMind-Setup-Minimal-<Version>.exe` samt `-N.bin`-Teilen herunterladen, die Summen mit `SHA256SUMS.txt` vergleichen (`Get-FileHash`) und die `.exe` als Administrator ausführen.
 
 Linux: eine Datei, ein Befehl. Das Bundle entpackt sich selbst, installiert die Pakete nacheinander und löscht alles
 Entpackte am Ende wieder. Eine Release-Datei darf bei GitHub höchstens 2 GiB groß sein, deshalb liegt das Bundle in Teilen
-(`sovereignmind-installer-full_<Version>_amd64.run.part01` bis `partNN`; zweite Variante: `-minimal`). Alle Teile und `SHA256SUMS.txt` in einen Ordner laden:
+(`sovereignmind-installer-minimal_<Version>_amd64.run.part01` bis `partNN`). Alle Teile und `SHA256SUMS.txt` in einen Ordner laden:
 
 ```bash
-cat sovereignmind-installer-full_<Version>_amd64.run.part* > sovereignmind-installer-full_<Version>_amd64.run
+cat sovereignmind-installer-minimal_<Version>_amd64.run.part* > sovereignmind-installer-minimal_<Version>_amd64.run
 sha256sum -c --ignore-missing SHA256SUMS.txt        # jede Zeile muss "OK" sein
-sudo bash sovereignmind-installer-full_<Version>_amd64.run
+sudo bash sovereignmind-installer-minimal_<Version>_amd64.run
 ```
 
-Platz: ca. 13 GB Download, 7,7 GB (beim Update 13 GB) vorübergehend unter `/var/tmp`, ca. 26 GB installiert. Bei USB-Stick oder
+**Volles Paket (Modelle im Installer, für Rechner ohne Internet, ca. 13 GB).** Es liegt nicht im Release, sondern im Download-Ordner, den die Download-Seite verlinkt. Windows: `SovereignMind-Setup-Full-<Version>.exe` samt `-N.bin`-Teilen. Linux: `sovereignmind-installer-full_<Version>_amd64.run.part01` bis `partNN`, zusammenfügen und mit `sudo bash` starten wie oben.
+
+Platz (Linux): volles Bundle ca. 13 GB Download, 7,7 GB (beim Update 13 GB) vorübergehend unter `/var/tmp`, ca. 26 GB installiert; minimales Bundle ca. 3 GB Download, 2,3 GB vorübergehend, dazu ca. 11 GB Modelle. Bei USB-Stick oder
 eigenem Download-Server entfällt das Zusammenfügen. Optionen (`--accept-eula`, `--yes`, `--port`, `--no-lan`, `--full-backup` ...):
 `bash <datei>.run --help`. Eine frühere Ollama-Installation des Pakets wird beim Update übernommen (Modelle ohne Neu-Download).
 
@@ -100,7 +116,7 @@ Vor der Installation ist der Endnutzer-Lizenzvertrag (EULA) zu bestätigen: Das 
 das Linux-Bundle fragt per debconf (`sovereignmind/accept-eula`). Ohne Zustimmung wird nicht installiert. Automatisierte
 Installation: Windows `/VERYSILENT` (gilt als Zustimmung), Linux `sudo bash <datei>.run --accept-eula --yes`.
 
-Prüfsummen stehen in `SHA256SUMS.txt` neben den Downloads.
+Prüfsummen stehen in `SHA256SUMS.txt` im Release.
 
 ### Demo (ohne Lizenz, 24 Stunden)
 
@@ -112,7 +128,7 @@ Zugangsdaten: Admin mit Passwort `sovereignmind`, Nutzer `test@sovereignmind.de`
 Lizenz, Schnittstellen, Dokumentenzahl und -größe (50 / 200 MB); Sicherungen und Recovery-Kit gibt es in der Demo nicht. Mit einem gültigen Lizenzschlüssel schaltet ein Admin
 die laufende Demo zur Vollversion frei (Daten übernehmen oder neu beginnen).
 
-Die Release-Dateien sind die der Vollversion (siehe oben). Der Endnutzer-Lizenzvertrag (Entwurf) wird in der App vor dem Start der Demo bestätigt.
+Installiert wird dieselbe Software wie oben beschrieben, auch mit dem Einzeiler. Der Endnutzer-Lizenzvertrag (Entwurf) wird in der App vor dem Start der Demo bestätigt.
 
 ### HTTPS
 
