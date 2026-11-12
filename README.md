@@ -71,7 +71,7 @@ sonst eine Vorarbeit nötig; llama-server (llama.cpp) und die Modelle liefert de
 
 - Windows 10 (1809) / 11 / Server 2019+ (x64) oder Ubuntu 24.04 / Debian 12 (x64)
 - Administratorrechte (Windows) bzw. `sudo` (Linux)
-- Linux: volles Bundle ca. 13 GB Download und ca. 26 GB Platz nach der Installation, minimales Bundle ca. 3 GB Download (dazu ca. 11 GB Modelle)
+- Linux: volles Bundle ca. 13 GB Download und ca. 26 GB Platz nach der Installation, minimales Bundle ca. 0,9 GB Download (dazu ca. 11 GB Modelle)
 - Für gute Antwortzeiten eine GPU mit ausreichend VRAM; ohne GPU läuft alles auf der CPU, deutlich langsamer
 - Ein Lizenzschlüssel (Token) und die E-Mail-Adresse, auf die er ausgestellt wurde (vom Anbieter)
 
@@ -105,7 +105,7 @@ sudo bash sovereignmind-installer-minimal_<Version>_amd64.run
 
 **Volles Paket (Modelle im Installer, für Rechner ohne Internet, ca. 13 GB).** Es liegt nicht im Release, sondern im Download-Ordner, den die Download-Seite verlinkt. Windows: `SovereignMind-Setup-Full-<Version>.exe` samt `-N.bin`-Teilen. Linux: `sovereignmind-installer-full_<Version>_amd64.run.part01` bis `partNN`, zusammenfügen und mit `sudo bash` starten wie oben.
 
-Platz (Linux): volles Bundle ca. 13 GB Download, 7,7 GB (beim Update 13 GB) vorübergehend unter `/var/tmp`, ca. 26 GB installiert; minimales Bundle ca. 3 GB Download, 2,3 GB vorübergehend, dazu ca. 11 GB Modelle. Bei USB-Stick oder
+Platz (Linux): volles Bundle ca. 13 GB Download, 7,7 GB (beim Update 13 GB) vorübergehend unter `/var/tmp`, ca. 26 GB installiert; minimales Bundle ca. 0,9 GB Download, 0,9 GB vorübergehend, dazu ca. 11 GB Modelle. Bei USB-Stick oder
 eigenem Download-Server entfällt das Zusammenfügen. Optionen (`--accept-eula`, `--yes`, `--port`, `--no-lan`, `--full-backup` ...):
 `bash <datei>.run --help`. Eine frühere Ollama-Installation des Pakets wird beim Update übernommen (Modelle ohne Neu-Download).
 
