@@ -23,9 +23,9 @@ ist die selbst gehostete Alternative.
 
 ## Funktionen
 
-- **Lokale KI:** Sprachmodell und Embeddings laufen auf der Hardware des Kunden (Ollama nativ
-  auf dem Rechner). Das Chat-Modell wird automatisch nach
-  verfügbarem VRAM gewählt (NVIDIA, AMD, sonst CPU) und kann der Admin im Bereich
+- **Lokale KI:** Sprachmodell und Embeddings laufen auf der Hardware des Kunden (llama.cpp nativ
+  auf dem Rechner, GPU über Vulkan). Das Chat-Modell wird automatisch nach
+  verfügbarem VRAM gewählt (NVIDIA, AMD, Intel, sonst CPU) und kann der Admin im Bereich
   „KI-Einstellungen“ wechseln.
 - **Chat mit Quellenbelegen:** Fragen in natürlicher Sprache, Antworten mit klickbaren
   Verweisen ins Originaldokument. Antworten immer auf Deutsch.
@@ -57,7 +57,7 @@ ist die selbst gehostete Alternative.
 
 ```
 Web-Oberfläche ──> Backend (Auth, Rollen, Lizenz, Mandanten)
-                      ├─ Inferenz (Ollama)
+                      ├─ Inferenz (llama.cpp)
                       ├─ Vektordatenbank (Qdrant)
                       ├─ Dokumentenverarbeitung (Docling)
                       ├─ Sprache (Vorlesen)
@@ -65,7 +65,7 @@ Web-Oberfläche ──> Backend (Auth, Rollen, Lizenz, Mandanten)
 ```
 
 Alles läuft nach der Installation als Dienst im Hintergrund. Es ist weder Docker noch WSL noch
-sonst eine Vorarbeit nötig; Ollama und die Modelle liefert der Installer mit.
+sonst eine Vorarbeit nötig; llama-server (llama.cpp) und die Modelle liefert der Installer mit.
 
 ## Voraussetzungen
 
@@ -91,7 +91,7 @@ sudo bash sovereignmind-installer-full_<Version>_amd64.run
 
 Platz: ca. 13 GB Download, 7,7 GB (beim Update 13 GB) vorübergehend unter `/var/tmp`, ca. 26 GB installiert. Bei USB-Stick oder
 eigenem Download-Server entfällt das Zusammenfügen. Optionen (`--accept-eula`, `--yes`, `--port`, `--no-lan`, `--full-backup` ...):
-`bash <datei>.run --help`. Ein vorhandenes, älteres Ollama wird auf die mitgelieferte Version angehoben.
+`bash <datei>.run --help`. Eine frühere Ollama-Installation des Pakets wird beim Update übernommen (Modelle ohne Neu-Download).
 
 Danach ist die Oberfläche unter <http://localhost:5043> (mit eingerichtetem HTTPS-Namen auch unter `https://chat.example.de`) erreichbar. Beim ersten Aufruf führt die App
 durch die Einrichtung (Lizenzschlüssel, Unternehmen, Admin-Passwort). Die Aktivierung läuft offline.
@@ -142,12 +142,12 @@ Linux: Das Kommando `sovereignmind` (kein root nötig für `open`, `url`, `statu
 | Befehl | Wirkung |
 | --- | --- |
 | `sovereignmind open` | Weboberfläche im Browser öffnen |
-| `sovereignmind status` | Version, Adressen, Gesundheit, Dienste, Autostart, Ollama, Ordner |
+| `sovereignmind status` | Version, Adressen, Gesundheit, Dienste, Autostart, KI-Server, Ordner |
 | `sovereignmind url` | Adresse lokal und im Netzwerk |
 | `sovereignmind start` / `stop` | alle Dienste starten bzw. stoppen |
 | `sovereignmind restart [backend]` | alle Dienste oder nur das Backend neu starten |
 | `sovereignmind autostart on\|off` | Start beim Hochfahren ein/aus |
-| `sovereignmind logs [dienst] [--once]` | Protokoll (backend, postgres, qdrant, ingestion, voice, ollama) |
+| `sovereignmind logs [dienst] [--once]` | Protokoll (backend, postgres, qdrant, ingestion, voice, llm-chat, llm-embed) |
 | `sovereignmind lan on\|off [IP]` | Zugriff aus dem Netzwerk ein/aus |
 | `sovereignmind https NAME [MODUS]` | HTTPS-Name und Zertifikatsmodus einrichten, `https off` schaltet ab |
 | `sovereignmind backup` | Sicherung jetzt starten |
@@ -166,12 +166,12 @@ Dienste:
   Vektordatenbank (Qdrant)      ● aktiv
   Dokumentenimport              ● aktiv
   Sprache                       ● aktiv
-  Ollama (KI-Modelle)           ● aktiv
+  KI-Server Chat                ● aktiv
+  KI-Server Embeddings          ● aktiv
   Backend und Weboberfläche     ● aktiv
 
 Autostart:               an
-Ollama:                  vorhandene Installation (0.40.4)
-Geladene Modelle:        keine (werden bei der ersten Anfrage geladen)
+KI-Server:               llama.cpp b12191, GPU (Vulkan): NVIDIA GeForce RTX 5070 Laptop GPU
 Nächste Sicherung:       Tue 2026-10-20
 
 Programme:               /opt/sovereignmind
