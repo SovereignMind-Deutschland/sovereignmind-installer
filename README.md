@@ -69,7 +69,7 @@ sonst eine Vorarbeit nötig; llama-server (llama.cpp) und die Modelle liefert de
 
 ## Voraussetzungen
 
-- Windows 10 (1809) / 11 / Server 2019+ (x64) oder Ubuntu 24.04 / Debian 12 (x64)
+- Windows 10 (1809) / 11 / Server 2019+ (x64) oder Ubuntu / Debian (x64), aktuelle Version
 - Administratorrechte (Windows) bzw. `sudo` (Linux)
 - Linux: volles Bundle ca. 13 GB Download und ca. 26 GB Platz nach der Installation, minimales Bundle ca. 0,9 GB Download (dazu ca. 11 GB Modelle)
 - Für gute Antwortzeiten eine GPU mit ausreichend VRAM; ohne GPU läuft alles auf der CPU, deutlich langsamer
@@ -85,7 +85,7 @@ irm https://sovereignmind-deutschland.github.io/sovereignmind-website/install.ps
 ```
 
 ```bash
-# Linux (Ubuntu 24.04 / Debian 12)
+# Linux (Ubuntu / Debian)
 curl -fsSL https://sovereignmind-deutschland.github.io/sovereignmind-website/install.sh | sh
 ```
 
