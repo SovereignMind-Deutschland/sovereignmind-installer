@@ -28,7 +28,7 @@ ist die selbst gehostete Alternative.
   verfügbarem VRAM gewählt (NVIDIA, AMD, Intel, sonst CPU) und kann der Admin im Bereich
   „KI-Einstellungen“ wechseln.
 - **Chat mit Quellenbelegen:** Fragen in natürlicher Sprache, Antworten mit klickbaren
-  Verweisen ins Originaldokument. Antworten immer auf Deutsch.
+  Verweisen ins Originaldokument. Antworten in der Sprache der Frage (Deutsch, Englisch).
 - **Dokumentenverwaltung:** PDF, DOCX, Tabellen u. a. werden automatisch geparst und
   durchsuchbar gemacht. Kategorien, Duplikaterkennung, Verarbeitungsstatus.
 - **Mehrere Nutzer und Rollen:** Admin und Member, eigenes Branding pro Unternehmen.
@@ -168,10 +168,12 @@ Linux: Das Kommando `sovereignmind` (kein root nötig für `open`, `url`, `statu
 | `sovereignmind https NAME [MODUS]` | HTTPS-Name und Zertifikatsmodus einrichten, `https off` schaltet ab |
 | `sovereignmind backup` | Sicherung jetzt starten |
 
+Der Installer selbst (Windows-Setup, `.run`/`.deb`/`.rpm`) und das Kommando `sovereignmind` sind auf Deutsch; die Oberflächensprache der Weboberfläche (Deutsch, Englisch) wählt jedes Mitglied im Profil.
+
 Beispielausgabe von `sovereignmind status`:
 
 ```text
-SovereignMind 2026.10.19.1606   ● läuft
+SovereignMind 2026.11.16.1917   ● läuft
 
 Weboberfläche:           http://localhost:5043
 Im Netzwerk:             http://192.168.0.42:5043
